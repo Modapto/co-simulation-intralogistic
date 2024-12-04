@@ -1,0 +1,117 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+canvas{
+    display: block;
+    max-width: 360px;
+}
+
+.link{
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.link:hover {
+    color: #258;
+    text-decoration: underline;
+}
+
+.box{
+    border-radius: 25px; 
+    border: 2px solid #296199; /*green #73AD21; */
+    padding: 20px;
+}
+
+.generalResult {
+    float: left;
+    width: 31%;
+    margin: 30px;
+}
+
+.otherResults {
+    float: left;
+    margin: 30px;
+}
+
+.afterFloat {
+    clear: left;   
+}
+
+.button {
+    background-color: #296199; /* #4CAF50 Green */
+    cursor: pointer;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    max-width: 100%;
+}
+
+.button:hover {
+    background-color: #722040;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    max-width: 100%;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 15px 32px;
+    color: white;
+    background-color: #296199; /*green #4CAF50;*/
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+}
+
+.inputfile + label:hover {
+    background-color: #722040;
+}
+
+.leftTable tr {
+    line-height: 2em;
+}
+
+.tableResult {
+    font-size:15px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.tableResult,
+.tableResult th,
+.tableResult td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tableResult tr:hover {
+    background-color: #f5f5f5
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Simulation Service</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/Chart.min.js"></script>
+    <!-- <script type="text/javascript" src="https://github.com/adobe-webplatform/Snap.svg/raw/master/dist/snap.svg-min.js"></script> -->
+    <script type="text/javascript" src="js/simulator.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <div id="simulationDiv">
+        <div id="inputDiv">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <input type="file" id="file-input" class="inputfile"/><label for="file-input" id="input_lbl"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg> <span id="labelSpan">Choose a model...</span></label>
+                    </td>
+                    <td>
+                        <div>Please select the file containing the model to simulate and press the Start button. Supported file formats are BPMN, ADOxx XML, ADO XML Light and PNML.</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div id="simParamsDiv">
+            <table width="100%">
+                <tr>
+                    <td style="text-align:center;">
+                        <input type="button" class="button" value="Start" onclick="simulate();"/>
+                    </td>
+                    <td>
+                        <table class="box" width="100%" >
+                            <tr><th>Simulation Parameters</th></tr>
+                            <tr><td><label>Number of executions to simulate: <input type="text" id="numExecutions" value="1000"/></label></td></tr>
+                            <tr><td><label>Show full results <input type="checkbox" id="fullResultsChk"/></label></td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+	</div>
+    <br>
+    <div id="graphResults" class="clearfix">
+        <div id="generalResultsDiv" class="generalResult">
+            <table class="tableResult leftTable">
+                <tr><td>Select Model</td><td><select id="model_generalRes_select"></select></td></tr>
+            </table>
+            <h3>General results</h3>
+            <table class="tableResult leftTable">
+                <tr><th></th><th>Measure</th><th>Details</th></tr>
+                <tr><td>Average Cost:</td><td><label id="avgCost_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Max Cost:</td><td><label id="maxCost_generalRes_lbl"></label></td><td><label class="link" id="maxCostTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Min Cost:</td><td><label id="minCost_generalRes_lbl"></label></td><td><label class="link" id="minCostTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Total Costs:</td><td><label id="totCost_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Average Executions in 1 day:</td><td><label id="dailyExec_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Average Executions Time:</td><td><label id="avgExecTime_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Max Executions Time:</td><td><label id="maxExecTime_generalRes_lbl"></label></td><td><label class="link" id="maxExecTimeTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Min Executions Time:</td><td><label id="minExecTime_generalRes_lbl"></label></td><td><label class="link" id="minExecTimeTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Total Executions Time:</td><td><label id="totExecTime_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Max Waiting Time:</td><td><label id="maxWaitTime_generalRes_lbl"></label></td><td><label class="link" id="maxWaitTimeTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Max Messages Waiting Time:</td><td><label id="maxMsgWaitTime_generalRes_lbl"></label></td><td><label class="link" id="maxMsgWaitTimeTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Min Waiting Time:</td><td><label id="minWaitTime_generalRes_lbl"></label></td><td><label class="link" id="minWaitTimeTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Min Messages Waiting Time:</td><td><label id="minMsgWaitTime_generalRes_lbl"></label></td><td><label class="link" id="minMsgWaitTimeTrace_generalRes_lbl"></label></td></tr>
+                <tr><td>Deadlocked Paths:</td><td><label id="totDeadP_generalRes_lbl"></label></td><td><label for="totDeadP_generalRes_select">Paths: </label><select id="totDeadP_generalRes_select"></select></td></tr>
+                <tr><td>Livelocked Paths:</td><td><label id="totLiveP_generalRes_lbl"></label></td><td><label for="totLiveP_generalRes_select">Paths: </label><select id="totLiveP_generalRes_select"></select></td></tr>
+                <tr><td>Total Error Terminated Traces:</td><td><label id="totTerm_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Total Deadlocked Traces:</td><td><label id="totDeadT_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Total Livelocked Traces:</td><td><label id="totLiveT_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Total Runs:</td><td><label id="totRuns_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Total Traces:</td><td><label id="totTraces_generalRes_lbl"></label></td><td></td></tr>
+                <tr><td>Total Paths:</td><td><label id="totPaths_generalRes_lbl"></label></td><td></td></tr>
+            </table>
+            <h3>Activities Infos</h3>
+
+            <table class="tableResult leftTable">
+                <tr><th><select id="activityRes_select"></select></th><th>Measure</th></tr>
+                <tr><td>Number of Executions:</td><td><label id="numExec_activityRes_lbl"></label></td></tr>
+                <tr><td>Costs:</td><td><label id="costs_activityRes_lbl"></label></td></tr>
+                <tr><td>Total Costs:</td><td><label id="totCosts_activityRes_lbl"></label></td></tr>
+                <tr><td>Execution Time:</td><td><label id="execTime_activityRes_lbl"></label></td></tr>
+                <tr><td>Total Execution Time:</td><td><label id="totExecTime_activityRes_lbl"></label></td></tr>
+                <tr><td><label class="link" id="show_object_lbl">Show Activity</label></td><td></td></tr>
+            </table>
+        </div>
+        <div id="pathsInfoDiv" class="otherResults">
+            <h3>Paths Infos</h3>
+            <table width="100%">
+                <tr>
+                    <td>
+                       <canvas id="canvasPathProbabilities" width="250" height="250"></canvas>
+                       <label for="pathListSelect">Paths: </label> <select id="pathListSelect"></select>
+                    </td>
+              
+                    <td style="vertical-align:top">
+                   
+                       <h4>Path details</h4>
+                       <table class="tableResult">
+                           <tr><td>Id:</td><td><label id="name_pathProb_lbl"></label></td></tr>
+                           <tr><td>Probability:</td><td><label id="prob_pathProb_lbl"></label></td></tr>
+                           <tr><td>Number of different traces:</td><td><label id="numTraces_pathProb_lbl"></label></td></tr>
+                           <tr><td>Is deadlocked:</td><td><label id="isDead_pathProb_lbl"></label></td></tr>
+                           <tr><td>Is livelocked:</td><td><label id="isLive_pathProb_lbl"></label></td></tr>
+                           <tr><td>Is terminated with exceptions:</td><td><label id="isTermin_pathProb_lbl"></label></td></tr>
+                           <tr><td>Min Waiting Time (total):</td><td><label id="minwt_pathProb_lbl"></label><br>SD: <label id="minsdwt_pathProb_lbl"></label><br>Trace: <label class="link" id="minwtt_pathProb_lbl"></label></td></tr>
+                           <tr><td>Min Waiting Time (messages):</td><td><label id="minmsgwt_pathProb_lbl"></label><br>SD: <label id="minmsgsdwt_pathProb_lbl"></label><br>Trace: <label class="link" id="minmsgwtt_pathProb_lbl"></label></td></tr>
+                           <tr><td><label class="link" id="show_path_lbl">Show Path</label></td><td></td></tr>
+                       </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="exeTimeCostsInfoDiv" class="otherResults">
+            <table>
+                <tr><th>Execution Time (hours)</th><th>Cost</th></tr>
+                <tr><td><canvas id="canvasPathExecTime" width="450" height="300"></canvas></td><td><canvas id="canvasPathCosts" width="450" height="300"></canvas></td></tr>
+            </table>
+        </div>
+        
+        <div id="tracesInfoDiv" class="otherResults">
+            <h3>Traces Infos</h3>
+            <table width="100%">
+                <tr>
+                    <td>
+                       <canvas id="canvasTraceProbabilities" width="250" height="250"></canvas>
+                       <label for="traceListSelect">Traces: </label> <select id="traceListSelect"></select>
+                    </td>
+                    
+                    <td style="vertical-align:top">
+                       
+                       <h4>Trace details</h4>
+                       <table class="tableResult">
+                           <tr><td>Id:</td><td><label id="name_traceProb_lbl"></label></td></tr>
+                           <tr><td>Probability:</td><td><label id="prob_traceProb_lbl"></label></td></tr>
+                           <tr><td>Execution Time:</td><td><label id="execTime_traceProb_lbl"></label></td></tr>
+                           <tr><td>Cost:</td><td><label id="costs_traceProb_lbl"></label></td></tr>
+                           <tr><td>Path:</td><td><label class="link" id="path_traceProb_lbl"></label></td></tr>
+                           <tr><td>Waiting Time (total):</td><td><label id="twt_traceProb_lbl"></label><br>SD: <label id="sdtwt_traceProb_lbl"></label></td></tr>
+                           <tr><td>Waiting Time (messages):</td><td><label id="mwt_traceProb_lbl"></label><br>SD: <label id="sdmwt_traceProb_lbl"></label></td></tr>
+                           <tr><td><label class="link" id="show_trace_lbl">Show Trace</label></td><td></td></tr>
+                       </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="rawResults" class="afterFloat">
+           <table width="100%">
+               <tr style="text-align:left"><th>Raw xml results</th></tr>
+               <tr><td><textarea id="simulationResultsTxt" style="margin: 0px; width: 100%; height: 200px;"></textarea></td></tr>
+               <tr style="text-align:left"><th>Internal Petri Net</th></tr>
+               <tr><td><textarea id="petrinetTxt" style="margin: 0px; width: 100%; height: 200px;"></textarea></td></tr>
+               <tr style="text-align:left"><th>Input Model</th></tr>
+               <tr><td><textarea id="inputModelTxt" style="margin: 0px; width: 100%; height: 200px;"></textarea></td></tr>
+           </table>
+        </div>
+    
+    </div>
+</body>
+</html>
