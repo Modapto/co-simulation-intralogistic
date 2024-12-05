@@ -82,8 +82,8 @@ public class SimulationEngine {
         
         simulation = new Simulation();
         //Follow the definition order.. IT'S IMPORTANT!! (is the order by which they will be called during the simulation)
-        //simulation.setTransitionSelector(transitionSelectorAdoxx);
-        simulation.setTransitionSelector(transitionSelectorDefault);
+        simulation.setTransitionSelector(transitionSelectorAdoxx);
+        //simulation.setTransitionSelector(transitionSelectorDefault);
         simulation.addSimulationListener(pathGeneration);
         simulation.addSimulationListener(traceGeneration);
         simulation.addSimulationListener(costCalculator);

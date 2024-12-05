@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ADOXML SYSTEM "adoxml31.dtd">
-<ADOXML version="3.1" date="03.12.2024" time="22:06" database="modapto" username="aas" adoversion="Version 1.8">
+<ADOXML version="3.1" date="05.12.2024" time="10:45" database="modapto" username="aas" adoversion="Version 1.8">
 <MODELS>
 <MODEL id="mod.34803" name="ILTAR - Simple" version="" modeltype="Petri Net" libtype="bp" applib="AAS Bee-Up v1.0.1 Dynamic">
 <MODELATTRIBUTES>
 <ATTRIBUTE name="Version number" type="STRING"></ATTRIBUTE>
 <ATTRIBUTE name="Author" type="STRING">beeup</ATTRIBUTE>
 <ATTRIBUTE name="Creation date" type="STRING">13.06.2024, 16:59</ATTRIBUTE>
-<ATTRIBUTE name="Date last changed" type="STRING">03.12.2024, 22:06:47</ATTRIBUTE>
+<ATTRIBUTE name="Date last changed" type="STRING">05.12.2024, 10:45:21</ATTRIBUTE>
 <ATTRIBUTE name="Last user" type="STRING">aas</ATTRIBUTE>
 <ATTRIBUTE name="Keywords" type="STRING"></ATTRIBUTE>
 <ATTRIBUTE name="Comment" type="STRING"></ATTRIBUTE>
@@ -30,7 +30,7 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="Current page layout" type="STRING"></ATTRIBUTE>
 <ATTRIBUTE name="Connector marks" type="STRING"></ATTRIBUTE>
 <ATTRIBUTE name="Type" type="STRING">Petri Net</ATTRIBUTE>
-<ATTRIBUTE name="Change counter" type="INTEGER">62371</ATTRIBUTE>
+<ATTRIBUTE name="Change counter" type="INTEGER">69264</ATTRIBUTE>
 <ATTRIBUTE name="Font size" type="INTEGER">0</ATTRIBUTE>
 <ATTRIBUTE name="Context of version" type="STRING"></ATTRIBUTE>
 <ATTRIBUTE name="Name" type="STRING">ILTAR - Simple</ATTRIBUTE>
@@ -95,7 +95,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34805</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37840" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37842" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -149,7 +158,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34811</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37836" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37838" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">5</ATTRIBUTE>
@@ -203,7 +221,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34817</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37832" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37834" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">1</ATTRIBUTE>
@@ -223,7 +250,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34820</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37828" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37830" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -277,7 +313,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34826</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37824" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37826" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -297,7 +342,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34829</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37820" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37822" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -317,7 +371,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34832</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37816" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37818" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -337,7 +400,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34835</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37812" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37814" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -619,7 +691,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34880</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37808" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37810" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -795,7 +876,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34898</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37804" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37806" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -883,7 +973,12 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34907</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.38200" number="1">
+<ATTRIBUTE name="Property" type="STRING">executions</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Ready" type="EXPRESSION">EXPR val:&quot;yes&quot;</ATTRIBUTE>
@@ -917,7 +1012,12 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34910</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.38202" number="1">
+<ATTRIBUTE name="Property" type="STRING">executions</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Ready" type="EXPRESSION">EXPR val:&quot;yes&quot;</ATTRIBUTE>
@@ -954,11 +1054,11 @@ TABLE &quot;Transition (PN)&quot;
 <RECORD name="Custom attributes">
 <ROW id="row.37600" number="1">
 <ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
-<ATTRIBUTE name="Value" type="LONGSTRING">10</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
 </ROW>
 <ROW id="row.37602" number="2">
 <ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
-<ATTRIBUTE name="Value" type="LONGSTRING">00:000:10:00:00</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
 </ROW>
 </RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
@@ -980,7 +1080,16 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="vizGrayscaleMode" type="EXPRESSION">EXPR val:0</ATTRIBUTE>
 <ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
 <ATTRIBUTE name="objectid" type="EXPRESSION">EXPR val:34916</ATTRIBUTE>
-<RECORD name="Custom attributes"></RECORD>
+<RECORD name="Custom attributes">
+<ROW id="row.37800" number="1">
+<ATTRIBUTE name="Property" type="STRING">cost</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">1</ATTRIBUTE>
+</ROW>
+<ROW id="row.37802" number="2">
+<ATTRIBUTE name="Property" type="STRING">executionTime</ATTRIBUTE>
+<ATTRIBUTE name="Value" type="LONGSTRING">00:000:00:05:00</ATTRIBUTE>
+</ROW>
+</RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
 <ATTRIBUTE name="Tokens" type="INTEGER">0</ATTRIBUTE>
@@ -1003,7 +1112,7 @@ TABLE &quot;Transition (PN)&quot;
 <RECORD name="Custom attributes"></RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
-<ATTRIBUTE name="Iterations" type="INTEGER">1000</ATTRIBUTE>
+<ATTRIBUTE name="Iterations" type="INTEGER">100</ATTRIBUTE>
 <ATTRIBUTE name="Transition conflict strategy" type="ENUMERATION">default</ATTRIBUTE>
 <ATTRIBUTE name="Show log" type="ENUMERATION">yes</ATTRIBUTE>
 <ATTRIBUTE name="Simulate multiple iterations" type="PROGRAMCALL">ITEM &quot;Run multiple iterations&quot; param:&quot;&quot;</ATTRIBUTE>
@@ -1028,7 +1137,7 @@ TABLE &quot;Transition (PN)&quot;
 <RECORD name="Custom attributes"></RECORD>
 <ATTRIBUTE name="Sort custom attributes" type="PROGRAMCALL">ITEM &quot;Sort custom attributes (ascending)&quot; param:&quot;&quot;</ATTRIBUTE>
 <ATTRIBUTE name="Text width" type="DOUBLE">1.6</ATTRIBUTE>
-<ATTRIBUTE name="Iterations" type="INTEGER">1000</ATTRIBUTE>
+<ATTRIBUTE name="Iterations" type="INTEGER">100</ATTRIBUTE>
 <ATTRIBUTE name="Transition conflict strategy" type="ENUMERATION">default</ATTRIBUTE>
 <ATTRIBUTE name="Show log" type="ENUMERATION">yes</ATTRIBUTE>
 <ATTRIBUTE name="Simulate multiple iterations" type="PROGRAMCALL">ITEM &quot;Run multiple iterations&quot; param:&quot;&quot;</ATTRIBUTE>
@@ -1213,7 +1322,7 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="Weight" type="INTEGER">1</ATTRIBUTE>
 <ATTRIBUTE name="Ready behaviour" type="ENUMERATION">Consume Tokens</ATTRIBUTE>
 <ATTRIBUTE name="sourceIsPlace" type="EXPRESSION">EXPR val:1</ATTRIBUTE>
-<ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
+<ATTRIBUTE name="General purpose attribute" type="LONGSTRING">0.9</ATTRIBUTE>
 </CONNECTOR>
 <CONNECTOR id="con.34942" class="Arc (PN)">
 <FROM instance="Route SA to O1" class="Transition (PN)"></FROM>
@@ -1421,7 +1530,7 @@ TABLE &quot;Transition (PN)&quot;
 <ATTRIBUTE name="Weight" type="INTEGER">1</ATTRIBUTE>
 <ATTRIBUTE name="Ready behaviour" type="ENUMERATION">Consume Tokens</ATTRIBUTE>
 <ATTRIBUTE name="sourceIsPlace" type="EXPRESSION">EXPR val:1</ATTRIBUTE>
-<ATTRIBUTE name="General purpose attribute" type="LONGSTRING"></ATTRIBUTE>
+<ATTRIBUTE name="General purpose attribute" type="LONGSTRING">0.9</ATTRIBUTE>
 </CONNECTOR>
 <CONNECTOR id="con.34970" class="Arc (PN)">
 <FROM instance="Station F Pick Up" class="Transition (PN)"></FROM>

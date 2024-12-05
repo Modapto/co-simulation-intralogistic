@@ -20,7 +20,9 @@ public class TransitionSelectorAdoxx extends TransitionSelectorDefault {
     
     public TransitionSelectorAdoxx() {
         super();
-        scriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
+        //scriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
+        scriptEngine = new org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory().getScriptEngine();
+
     }
     
     @Override
@@ -58,8 +60,10 @@ public class TransitionSelectorAdoxx extends TransitionSelectorDefault {
     /*
     public static void main(String[] args){
         try {    
-            ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-            Boolean isOk = false;
+            //ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+            ScriptEngine engine = new org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory().getScriptEngine();
+            
+            Boolean isOk = true;
             engine.put("ok", isOk);
             String script = "function probability() { if(ok){ return Math.random();} else { return ok;} }";
             engine.eval(script);

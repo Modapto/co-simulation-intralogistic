@@ -84,11 +84,15 @@ public class ImporterPNML implements ImporterXmlI{
         for(int i=0;i<transitionNodeList.getLength();i++){
             String id = transitionNodeList.item(i).getAttributes().getNamedItem("id").getNodeValue();
             String name = (String) XMLUtils.execXPath(transitionNodeList.item(i), "./*[local-name()='name']/*[local-name()='text']", XPathConstants.STRING);
-            
+            String executionsString = (String) XMLUtils.execXPath(transitionNodeList.item(i), "./*[local-name()='toolspecific']//*[local-name()='executions']", XPathConstants.STRING);
+
             float[] xy = getPNMLElementCoordinatesXY(pnmlXml, id);
             GeneratedElements genList = pnm.processElement(id, "t", id, xy[0], xy[1]);
             if(genList.transitionList.length>0){
                 genList.transitionList[0].addInfo("name", name);
+                try{
+                    genList.transitionList[0].autoFireLimit = Integer.parseInt(executionsString);
+                }catch(Exception ex){}
             }
         }
         

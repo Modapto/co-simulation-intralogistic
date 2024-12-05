@@ -99,10 +99,15 @@ public class ImporterADOxxPetriNet implements ImporterXmlI{
                 String id = transitionNodeList.item(i).getAttributes().getNamedItem("id").getNodeValue();
                 String name = transitionNodeList.item(i).getAttributes().getNamedItem("name").getNodeValue();
                 
+                String executionsString = (String) XMLUtils.execXPath(transitionNodeList.item(i), ".//*[@name='Property' and text()='executions']/../*[@name='Value']", XPathConstants.STRING);
+                
                 float[] xy = getAdoxxElementCoordinatesXY(pnModelEl, id);
                 GeneratedElements genList = pnm.processElement(id, "t", id, xy[0], xy[1]);
                 if(genList.transitionList.length>0){
                     genList.transitionList[0].addInfo("name", name);
+                    try{
+                        genList.transitionList[0].autoFireLimit = Integer.parseInt(executionsString);
+                    }catch(Exception ex){}
                 }
             }
             
@@ -120,15 +125,18 @@ public class ImporterADOxxPetriNet implements ImporterXmlI{
                 try{
                     weightN = Integer.parseInt(weight);
                 }catch(Exception ex){}
+                String pathProbabilityString = (String) XMLUtils.execXPath(relationNodeList.item(i), "./*[@name='General purpose attribute']", XPathConstants.STRING);
                 if(sourceId.isEmpty()) throw new Exception("ERROR: Can not identify the element with name " + sourceName + " for the relation " + id);
                 if(targetId.isEmpty()) throw new Exception("ERROR: Can not identify the element with name " + targetName + " for the relation " + id);
                 
                 GeneratedElements elList = pnm.processRelation(id, "connection", sourceId, targetId);
                 if(elList.ptList.length>0){
                     elList.ptList[0].weight = weightN;
+                    elList.ptList[0].addInfo("pathProbability", pathProbabilityString);
                 }
                 if(elList.tpList.length>0){
                     elList.tpList[0].weight = weightN;
+                    elList.tpList[0].addInfo("pathProbability", pathProbabilityString);
                 }
             }
         
