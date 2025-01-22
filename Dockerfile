@@ -18,8 +18,6 @@ RUN \
     unzip /opt/main.zip -d /opt  && \
     rm /opt/main.zip && \
     mvn -B -f /opt/co-simulation-intralogistic-main/model-simulation-and-verification/pom.xml clean install && \
-    
-    
     unzip /opt/co-simulation-intralogistic-main/model-simulation-and-verification/target/model-simulation-verification.war -d /usr/local/tomcat/webapps/model-simulation-verification/  && \
     rm -r /opt/co-simulation-intralogistic-main && \
     apt-get -qy purge maven && \
