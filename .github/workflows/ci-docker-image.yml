@@ -29,6 +29,9 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.CI_ORG_TOKEN }}
 
+    - name: Install Required Tools
+      run: sudo apt-get install unzip
+
     - name: Build the Docker image
       run: docker build --no-cache . --file Dockerfile --tag ghcr.io/modapto/${{ env.DOCKER_IMAGE }}:latest
 
