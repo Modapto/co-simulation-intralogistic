@@ -14,7 +14,7 @@ RUN \
     apt-get -qy install wget && \
     apt-get -qy install unzip && \
     apt-get -qy install libc6:i386 libncurses5:i386 libstdc++6:i386 && \
-    wget https://github.com/Modapto/co-simulation-intralogistic/archive/refs/heads/main.zip -O /opt/main.zip
+    wget https://github.com/Modapto/co-simulation-intralogistic/archive/refs/heads/main.zip -O /opt/main.zip && \
     unzip /opt/main.zip -d /opt  && \
     rm /opt/main.zip && \
     mvn -B -f /opt/co-simulation-intralogistic-main/model-simulation-and-verification/pom.xml clean install && \
