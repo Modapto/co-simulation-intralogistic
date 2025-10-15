@@ -22,6 +22,8 @@ The following REST APIs are available accepting the XML model as input and retur
 - POST /rest/verificator/reachability?bpObjectId=
 - POST /rest/verificator/path?bpFromObjectId=&bpToObjectId=
 
+A running instance is available at https://co-simulation.modapto.atc.gr/model-simulation-verification/
+
 ### Important Notes:
 
 - If the war file name is changed, the files verificator.js and simulator.js must be adapted
