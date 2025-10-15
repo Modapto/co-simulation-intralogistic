@@ -641,33 +641,41 @@ function simulate() {
     var host = getURLParameter("host");
     if (host != null)
         serviceEndpoint = host + '/'+appname;
+    var endpoint = getURLParameter("endpoint");
+    if (endpoint != null)
+        serviceEndpoint = endpoint;
 
     if (fileContent == null)
         return;
+
+    var jsonFormat = getURLParameter("format") == 'json';
     
     $('#inputModelTxt').html(fileContent);
-
+    var url = serviceEndpoint + '/rest/simulator/pathanalysis?numExecutions=' + escape($('#numExecutions').val()) + '&fullResults=' + $('#fullResultsChk').is(':checked');
+    if (endpoint) {
+        url = endpoint;
+    }
     $.ajax({
-        url : serviceEndpoint + '/rest/simulator/pathanalysis?numExecutions=' + escape($('#numExecutions').val()) + '&fullResults=' + $('#fullResultsChk').is(':checked'),
+        url : url,
         type : 'POST',
-        data : fileContent,
+        data : jsonFormat ? JSON.stringify({numExecutions: $('#numExecutions').val(), fullResults: $('#fullResultsChk').is(':checked'), fileContent: fileContent }) : fileContent,
         dataType : 'text',
-        contentType : 'application/xml',
+        contentType : jsonFormat ? 'application/json' : 'application/xml',
         processData : false,
         async : true,
         success : function(data, status) {
+            if(jsonFormat) {
+                var dataJson = JSON.parse(data);
+                data = dataJson.results;
+            }
 
             if(data.startsWith('<ERROR>')){
                 alert(data);
                 return;
             }
-            
             $('#graphResults').show();
-
             $('#simulationResultsTxt').html(formatXml(data));
-
             xmlData = $(jQuery.parseXML(data));
-            
             loadModelSelect();
             loadCharts();
         },
@@ -676,7 +684,7 @@ function simulate() {
         }
     });
     
-    if(showRawResults())
+    if(showRawResults() && !endpoint)
         generatePNML();
 }
 
