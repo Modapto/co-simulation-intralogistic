@@ -641,14 +641,13 @@ function simulate() {
     var host = getURLParameter("host");
     if (host != null)
         serviceEndpoint = host + '/'+appname;
-    var endpoint = getURLParameter("endpoint");
+    var endpoint = new URLSearchParams(window.location.search).get('endpoint');
     if (endpoint != null)
         serviceEndpoint = endpoint;
-
+    var jsonFormat = new URLSearchParams(window.location.search).get('format') == 'json';
+    
     if (fileContent == null)
         return;
-
-    var jsonFormat = getURLParameter("format") == 'json';
     
     $('#inputModelTxt').html(fileContent);
     var url = serviceEndpoint + '/rest/simulator/pathanalysis?numExecutions=' + escape($('#numExecutions').val()) + '&fullResults=' + $('#fullResultsChk').is(':checked');
