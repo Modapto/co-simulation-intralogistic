@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.adoxx.pn.P;
 import org.adoxx.pn.PetriNet;
 import org.adoxx.utils.IOUtils;
+import org.adoxx.utils.Utils;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
@@ -75,54 +76,59 @@ public class LOLA {
         
         if(lolaOutput==null || lolaOutput.isEmpty())
             return new String[0];
-        
-        String newLineChar = "\r\n";
-        if(!lolaOutput.contains("\r\n"))
-            newLineChar = "\n";
-        
-        ArrayList<String> transitionTraceList = new ArrayList<String>();
-        String[] traceRowList = lolaOutput.split(newLineChar);
-        for(String traceRow:traceRowList)
-            if(!(traceRow.contains(":") || traceRow.startsWith("===") || traceRow.startsWith("lola: ") || traceRow.startsWith("NOSTATE")))
-                transitionTraceList.add(traceRow);
-        
-        if(transitionTraceList.isEmpty())
-            return new String[0];
-        
-        ArrayList<String> placeTraceList = new ArrayList<String>();
-        PetriNet pnc = pn.clonePN();
-        ArrayList<P> placeList = pnc.getPlaceList_safe();
-        
-        if(pnc.getEnabledTransitions().contains(pnc.getTransition(transitionTraceList.get(transitionTraceList.size()-1)))){
-            //rigirare l'output
-            ArrayList<String> tmpList = new ArrayList<String>();
-            for(int i=transitionTraceList.size()-1;i>=0;i--)
-                tmpList.add(transitionTraceList.get(i));
-            transitionTraceList = tmpList;
-        }
-        
-        for(String transitionTrace:transitionTraceList){
-            int[] currentMark = pnc.getCurrentMark();
-            String places = "";
-            for(int i=0;i<currentMark.length;i++)
-                if(currentMark[i]!=0)
-                    places += placeList.get(i).name+" ";
-            placeTraceList.add(places);
+        try {
+            String newLineChar = "\r\n";
+            if(!lolaOutput.contains("\r\n"))
+                newLineChar = "\n";
+            
+            ArrayList<String> transitionTraceList = new ArrayList<String>();
+            String[] traceRowList = lolaOutput.split(newLineChar);
+            for(String traceRow:traceRowList)
+                if(!(traceRow.contains(":") || traceRow.startsWith("===") || traceRow.startsWith("lola: ") || traceRow.startsWith("NOSTATE")))
+                    transitionTraceList.add(traceRow);
+            
+            if(transitionTraceList.isEmpty())
+                return new String[0];
+            
+            ArrayList<String> placeTraceList = new ArrayList<String>();
+            PetriNet pnc = pn.clonePN();
+            ArrayList<P> placeList = pnc.getPlaceList_safe();
+            
+            if(pnc.getEnabledTransitions().contains(pnc.getTransition(transitionTraceList.get(transitionTraceList.size()-1)))){
+                //rigirare l'output
+                ArrayList<String> tmpList = new ArrayList<String>();
+                for(int i=transitionTraceList.size()-1;i>=0;i--)
+                    tmpList.add(transitionTraceList.get(i));
+                transitionTraceList = tmpList;
+            }
+            
+            for(String transitionTrace:transitionTraceList){
+                int[] currentMark = pnc.getCurrentMark();
+                String places = "";
+                for(int i=0;i<currentMark.length;i++)
+                    if(currentMark[i]!=0)
+                        places += placeList.get(i).name+" ";
+                placeTraceList.add(places);
 
-            pnc.fireTransition(pnc.getTransition(transitionTrace));
+                pnc.fireTransition(pnc.getTransition(transitionTrace));
+            }
+            {
+                int[] currentMark = pnc.getCurrentMark();
+                String places = "";
+                for(int i=0;i<currentMark.length;i++)
+                    if(currentMark[i]!=0)
+                        places += placeList.get(i).name+" ";
+                placeTraceList.add(places);
+            }
+                    
+            String[] ret = new String[placeTraceList.size()];
+            placeTraceList.toArray(ret);
+            return ret;
+        } catch (Exception ex) {
+            ex.printStackTrace(); 
+            Utils.log(ex);
+            return new String[0];
         }
-        {
-            int[] currentMark = pnc.getCurrentMark();
-            String places = "";
-            for(int i=0;i<currentMark.length;i++)
-                if(currentMark[i]!=0)
-                    places += placeList.get(i).name+" ";
-            placeTraceList.add(places);
-        }
-                
-        String[] ret = new String[placeTraceList.size()];
-        placeTraceList.toArray(ret);
-        return ret;
     }
     
     /*

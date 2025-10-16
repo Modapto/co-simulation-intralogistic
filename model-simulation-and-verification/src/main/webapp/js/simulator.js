@@ -1,5 +1,3 @@
-var appname = 'model-simulation-verification';
-
 var xmlData = null;
 var fileContent = null;
 var msgSourceWindow = null;
@@ -636,28 +634,72 @@ function readSingleFile(e) {
 }
 
 function simulate() {
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/")) +  '/rest/json';
 
-    var serviceEndpoint = getProtocol() + '//' + getHostname() + '/'+appname;
-    var host = getURLParameter("host");
-    if (host != null)
-        serviceEndpoint = host + '/'+appname;
     var endpoint = new URLSearchParams(window.location.search).get('endpoint');
     if (endpoint != null)
         serviceEndpoint = endpoint;
-    var jsonFormat = new URLSearchParams(window.location.search).get('format') == 'json';
     
     if (fileContent == null)
         return;
     
     $('#inputModelTxt').html(fileContent);
-    var url = serviceEndpoint + '/rest/simulator/pathanalysis?numExecutions=' + escape($('#numExecutions').val()) + '&fullResults=' + $('#fullResultsChk').is(':checked');
-    if (endpoint) {
-        url = endpoint;
-    }
+
     $.ajax({
-        url : url,
+        url : serviceEndpoint,
         type : 'POST',
-        data : jsonFormat ? JSON.stringify({numExecutions: $('#numExecutions').val(), fullResults: $('#fullResultsChk').is(':checked'), fileContent: fileContent }) : fileContent,
+        data : JSON.stringify({alg:'simulation', params: 'numExecutions=' + $('#numExecutions').val() + '&fullResults='+ $('#fullResultsChk').is(':checked'), modelB64: btoa(fileContent) }),
+        dataType : 'text',
+        contentType : 'application/json',
+        processData : false,
+        async : true,
+        success : function(data, status) {
+            var dataJson = JSON.parse(data);
+            if (data.error) {
+                alert (data.error);
+                return;
+            }
+            data = atob(dataJson.resultsB64);
+            
+
+            if(data.startsWith('<ERROR>')){
+                alert(data);
+                return;
+            }
+            $('#graphResults').show();
+            $('#simulationResultsTxt').html(formatXml(data));
+            xmlData = $(jQuery.parseXML(data));
+            loadModelSelect();
+            loadCharts();
+        },
+        error : function(request, status, error) {
+            alert('Error: ' + status + ' ' + error);
+        }
+    });
+    
+    if(showRawResults() && !endpoint)
+        generatePNML();
+}
+
+
+function simulate_old() {
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
+
+    var jsonFormat = new URLSearchParams(window.location.search).get('format') == 'json';
+    serviceEndpoint += jsonFormat ? '/rest/json' : '/rest/simulator/pathanalysis?numExecutions=' + $('#numExecutions').val() + '&fullResults=' + $('#fullResultsChk').is(':checked');
+    var endpoint = new URLSearchParams(window.location.search).get('endpoint');
+    if (endpoint != null)
+        serviceEndpoint = endpoint;
+    
+    if (fileContent == null)
+        return;
+    
+    $('#inputModelTxt').html(fileContent);
+
+    $.ajax({
+        url : serviceEndpoint,
+        type : 'POST',
+        data : jsonFormat ? JSON.stringify({alg:'simulation', params: 'numExecutions=' + $('#numExecutions').val() + '&fullResults='+ $('#fullResultsChk').is(':checked'), modelB64: btoa(fileContent) }) : fileContent,
         dataType : 'text',
         contentType : jsonFormat ? 'application/json' : 'application/xml',
         processData : false,
@@ -665,7 +707,11 @@ function simulate() {
         success : function(data, status) {
             if(jsonFormat) {
                 var dataJson = JSON.parse(data);
-                data = dataJson.results;
+                if (data.error) {
+                    alert (data.error);
+                    return;
+                }
+                data = atob(dataJson.resultsB64);
             }
 
             if(data.startsWith('<ERROR>')){
@@ -689,10 +735,7 @@ function simulate() {
 
 function generatePNML() {
 
-    var serviceEndpoint = getProtocol() + '//' + getHostname() + '/'+appname;
-    var host = getURLParameter("host");
-    if (host != null)
-        serviceEndpoint = host + '/'+appname;
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
 
     if (fileContent == null)
         return;

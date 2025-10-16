@@ -1,4 +1,3 @@
-var appname = 'model-simulation-verification';
 var xmlData = null;
 var fileContent = null;
 var msgSourceWindow = null;
@@ -32,24 +31,30 @@ function loadModelSelect() {
 
 var objectListXml = null;
 function loadObjectListXml(){
-    var serviceEndpoint = getProtocol() + '//' + getHostname() + '/'+appname;
-    var host = getURLParameter("host");
-    if (host != null)
-        serviceEndpoint = host + '/'+appname;
-    var endpointUrl = serviceEndpoint + '/rest/utils/getmodellist';
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"))+  '/rest/json';
+    var endpoint = new URLSearchParams(window.location.search).get('endpoint');
+    if (endpoint != null)
+        serviceEndpoint = endpoint;
+
     
     if (fileContent == null)
         return;
     
     $.ajax({
-        url : endpointUrl,
+        url : serviceEndpoint,
         type : 'POST',
-        data : fileContent,
+        data : JSON.stringify({alg:'getmodellist', params:'', modelB64: btoa(fileContent)}),
         dataType : 'text',
-        contentType : 'application/xml',
+        contentType : 'application/json',
         processData : false,
         async : false,
         success : function(data, status) {
+            var dataJson = JSON.parse(data);
+            if (data.error) {
+                alert (data.error);
+                return;
+            }
+            data = atob(dataJson.resultsB64);
 
             if(data.startsWith('<ERROR>')){
                 alert(data);
@@ -343,11 +348,68 @@ function setFileContent(content) {
 }
 
 function verify() {
-    var serviceEndpoint = getProtocol() + '//' + getHostname() + '/'+appname;
-    var host = getURLParameter("host");
-    if (host != null)
-        serviceEndpoint = host + '/'+appname;
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"))+  '/rest/json';
+    var endpoint = new URLSearchParams(window.location.search).get('endpoint');
+    if (endpoint != null)
+        serviceEndpoint = endpoint;
+    if (fileContent == null)
+        return;
+    
+    var alg = $('input:radio[name="verificationType"]').filter(':checked').val();
+    var params = '';
+    if(alg == 'deadlock') {
+        params = 'checkAllDeadlock=' + $('#checkAllDeadlockChk').is(':checked');
+    }
+    if(alg == 'unboundness') {
+        params = 'checkAllUnboundedness=' + $('#checkAllUnboundnessChk').is(':checked');
+    }
+    if(alg == 'reachability') {
+        params = 'bpObjectId=' + $('#reachability_object_select').find(":selected").val() + '&inAnyCase=' + $('#reachability_inAnyCase_chk').is(':checked') + '&negate=' + $('#reachability_negate_chk').is(':checked');
+    }
+    if(alg == 'path') {
+        params = 'bpFromObjectId=' + $('#path_objectFrom_select').find(":selected").val() + '&bpToObjectId=' + $('#path_objectTo_select').find(":selected").val() + '&inAnyCase=' + $('#path_inAnyCase_chk').is(':checked') + '&negateFrom=' + $('#path_negateFrom_chk').is(':checked') + '&negateTo=' + $('#path_negateTo_chk').is(':checked');
+    }
+    var modelB64 = btoa(fileContent);
+    $('#inputModelTxt').html(fileContent);
 
+    $.ajax({
+        url : serviceEndpoint,
+        type : 'POST',
+        data :  JSON.stringify({alg:alg, params:params, modelB64:modelB64}),
+        dataType : 'text',
+        contentType : 'application/json',
+        processData : false,
+        async : true,
+        success : function(data, status) {
+            var dataJson = JSON.parse(data);
+            if (data.error) {
+                alert (data.error);
+                return;
+            }
+            data = atob(dataJson.resultsB64);
+            if(data.startsWith('<ERROR>')){
+                alert(data);
+                return;
+            }
+            
+            $('#resultsDiv').show();
+            
+            $('#verificationResultsTxt').html(data);
+            xmlData = $(jQuery.parseXML(data));
+            
+            loadModelSelect();
+        },
+        error : function(request, status, error) {
+            alert('Error: ' + status + ' ' + error);
+        }
+    });
+    
+    if(showRawResults() && !endpoint)
+        generatePNML();
+}
+
+function verify_old() {
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
     if (fileContent == null)
         return;
     
@@ -400,10 +462,7 @@ function verify() {
 
 function generatePNML() {
 
-    var serviceEndpoint = getProtocol() + '//' + getHostname() + '/'+appname;
-    var host = getURLParameter("host");
-    if (host != null)
-        serviceEndpoint = host + '/'+appname;
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
 
     if (fileContent == null)
         return;

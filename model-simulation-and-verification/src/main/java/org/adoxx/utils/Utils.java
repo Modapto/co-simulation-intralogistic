@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -94,6 +97,36 @@ public class Utils {
             for(int iColumn=0;iColumn<num;iColumn++)
                 ret[iRow][num-1-iColumn] = (iRow/((int) Math.pow(2, iColumn))) % 2;
         return ret;
+    }
+
+    public static Map<String, String> parseQueryString(String query) {
+        Map<String, String> params = new HashMap<>();
+        if (query == null || query.isEmpty()) return params;
+
+        for (String pair : query.split("&")) {
+            int idx = pair.indexOf("=");
+            try {
+                String key = idx > 0
+                        ? java.net.URLDecoder.decode(pair.substring(0, idx), StandardCharsets.UTF_8)
+                        : java.net.URLDecoder.decode(pair, StandardCharsets.UTF_8);
+                String value = idx > 0 && pair.length() > idx + 1
+                        ? java.net.URLDecoder.decode(pair.substring(idx + 1), StandardCharsets.UTF_8)
+                        : "";
+                params.put(key, value);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return params;
+    }
+
+    public static String checkEmpty(String input, String message) throws Exception {
+        if(input == null || input == "") throw new Exception(message);
+        return input;
+    }
+    public static String checkDefault(String input, String defaultVal) throws Exception {
+        if(input == null || input == "") return defaultVal;
+        return input;
     }
 
 	/*
