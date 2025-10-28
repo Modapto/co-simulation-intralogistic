@@ -9,6 +9,7 @@ import org.adoxx.pn.T;
 import org.adoxx.pn.input.ImporterXmlI;
 import org.adoxx.pn.input.mapping.MappingHelper;
 import org.adoxx.pn.input.mapping.data.GeneratedElements;
+import org.adoxx.utils.Utils;
 import org.adoxx.utils.XMLUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -229,6 +230,9 @@ public class ImporterOMGBPMN implements ImporterXmlI{
 
             if(costsString.isEmpty()) costsString = "0";
             if(executionTimeString.isEmpty()) executionTimeString = "0";
+
+            if(Utils.isAdoxxDateTime(executionTimeString))
+                executionTimeString = "" + Utils.convertAdoxxDateTimeToMilliseconds(executionTimeString);
             /*
             double costs = 0;
             try{
@@ -418,6 +422,8 @@ public class ImporterOMGBPMN implements ImporterXmlI{
             
             //Simulation Parameters
             String simulationPathProbability = getBPMNExtensionParam(bpmnDefinition, id, "PathProbability");
+            if(simulationPathProbability.isEmpty()) simulationPathProbability = getBPMNExtensionParamADONP(bpmnDefinition, id, "PATH_PROBABILITY");
+            
             for(PT pt:ge.ptList){
                 if(!simulationPathProbability.isEmpty()) 
                     pt.addInfo("pathProbability", simulationPathProbability);

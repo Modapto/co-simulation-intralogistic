@@ -29,6 +29,8 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import net.sf.saxon.xpath.XPathFactoryImpl;
+
 public class XMLUtils {
     
     public static Document getXmlDocFromString(String xml) throws Exception{
@@ -45,7 +47,7 @@ public class XMLUtils {
     public static Document getXmlDocFromIS(InputStream is) throws Exception{
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
-        dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, false);
         DocumentBuilder builder = dbf.newDocumentBuilder();
         builder.setEntityResolver(new EntityResolver() {
                 public InputSource resolveEntity(String publicId, String systemId)
@@ -68,7 +70,7 @@ public class XMLUtils {
     public static Document createNewDocument() throws Exception{
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
-        dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, false);
         //dbf.setIgnoringElementContentWhitespace(true);
         return dbf.newDocumentBuilder().newDocument();
     }
@@ -127,16 +129,25 @@ public class XMLUtils {
         return buffer.append("'").append(field.substring(start)).append("'").append(")").toString();
     }
     
-    private static XPath xPath = XPathFactory.newInstance().newXPath();
+    //private static XPath xPath = XPathFactory.newInstance().newXPath();
+    
     public static Object execXPath(org.w3c.dom.Node node, String pattern, QName xPathConstantsType) throws Exception{
-         return xPath.compile(pattern).evaluate(node, xPathConstantsType);
+        //XPathFactory factory = XPathFactory.newInstance();
+        XPathFactory factory = new XPathFactoryImpl();
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, false);
+        XPath xPath = factory.newXPath();
+        return xPath.compile(pattern).evaluate(node, xPathConstantsType);
     }
     
     public static Object execXPath(org.w3c.dom.Node node, XPathExpression expression, QName xPathConstantsType) throws Exception{
         return expression.evaluate(node, xPathConstantsType);
-   }
+    }
     
     public static XPathExpression createXPathQuery(String pattern) throws Exception{
+        //XPathFactory factory = XPathFactory.newInstance();
+        XPathFactory factory = new XPathFactoryImpl();
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, false);
+        XPath xPath = factory.newXPath();
         return xPath.compile(pattern);
     }
 }
