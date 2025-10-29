@@ -370,7 +370,7 @@ function verify() {
         params = 'bpFromObjectId=' + $('#path_objectFrom_select').find(":selected").val() + '&bpToObjectId=' + $('#path_objectTo_select').find(":selected").val() + '&inAnyCase=' + $('#path_inAnyCase_chk').is(':checked') + '&negateFrom=' + $('#path_negateFrom_chk').is(':checked') + '&negateTo=' + $('#path_negateTo_chk').is(':checked');
     }
     var modelB64 = btoa(fileContent);
-    $('#inputModelTxt').html(fileContent);
+    //$('#inputModelTxt').html(fileContent);
 
     $.ajax({
         url : serviceEndpoint,
@@ -514,7 +514,7 @@ function processImportModel () {
     return;
   $.get(decodeURI(modelURL), function (data) {
     setFileContent(data);
-  });
+  }, 'text');
 }
 
 $(document).ready(function() {

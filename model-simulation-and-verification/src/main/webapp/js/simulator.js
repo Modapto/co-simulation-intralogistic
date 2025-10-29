@@ -643,7 +643,7 @@ function simulate() {
     if (fileContent == null)
         return;
     
-    $('#inputModelTxt').html(fileContent);
+    //$('#inputModelTxt').html(fileContent);
 
     $.ajax({
         url : serviceEndpoint,
@@ -796,7 +796,7 @@ function processImportModel () {
     return;
   $.get(decodeURI(modelURL), function (data) {
     fileContent = data;
-  });
+  }, 'text');
 }
 
 $(document).ready(function() {
