@@ -9,13 +9,10 @@ import java.nio.charset.StandardCharsets;
 
 public class RequestLoggingFilter implements Filter {
 
-    // Max bytes to log (to avoid huge payloads)
     private static final int MAX_LOG_SIZE = 4096;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // No init needed
-    }
+    public void init(FilterConfig filterConfig) {}
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -24,43 +21,37 @@ public class RequestLoggingFilter implements Filter {
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-            // Only log POST/PUT/DELETE (with body)
             String method = httpRequest.getMethod();
-            if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method) || "DELETE".equalsIgnoreCase(method)) {
 
-                // Wrap the request to be able to read the body multiple times
-                CachedBodyHttpServletRequest cachedRequest = new CachedBodyHttpServletRequest(httpRequest);
+            // Wrap request to read body safely (body may be empty for GET)
+            CachedBodyHttpServletRequest cachedRequest = new CachedBodyHttpServletRequest(httpRequest);
 
-                String body = cachedRequest.getBody();
-                if (body.length() > MAX_LOG_SIZE) {
-                    body = body.substring(0, MAX_LOG_SIZE) + "...[truncated]";
-                }
-
-                System.out.println("Request " + method + " " + httpRequest.getRequestURI() + " body: " + body);
-
-                chain.doFilter(cachedRequest, response);
-                return;
+            String body = cachedRequest.getBody();
+            if (body.length() > MAX_LOG_SIZE) {
+                body = body.substring(0, MAX_LOG_SIZE) + "...[truncated]";
             }
+
+            System.out.println("Request " + method + " " + httpRequest.getRequestURI() +
+                    " query=\"" + httpRequest.getQueryString() + "\" body: " + body);
+
+            chain.doFilter(cachedRequest, response);
+            return;
         }
 
         chain.doFilter(request, response);
     }
 
     @Override
-    public void destroy() {
-        // No cleanup
-    }
+    public void destroy() {}
 
-    /**
-     * Helper wrapper class to cache request body
-     */
+    // Helper wrapper to cache the request body
     private static class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
         private final byte[] cachedBody;
 
         public CachedBodyHttpServletRequest(HttpServletRequest request) throws IOException {
             super(request);
-            InputStream requestInputStream = request.getInputStream();
-            cachedBody = readInputStream(requestInputStream);
+            InputStream is = request.getInputStream();
+            cachedBody = readInputStream(is);
         }
 
         private byte[] readInputStream(InputStream is) throws IOException {
@@ -94,9 +85,7 @@ public class RequestLoggingFilter implements Filter {
                 }
 
                 @Override
-                public void setReadListener(ReadListener readListener) {
-                    // not needed
-                }
+                public void setReadListener(ReadListener readListener) {}
             };
         }
 
