@@ -103,5 +103,11 @@
             <artifactId>Saxon-HE</artifactId>
             <version>12.5</version> <!-- or latest -->
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>8.5.100</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

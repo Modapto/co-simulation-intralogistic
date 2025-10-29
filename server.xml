@@ -11,11 +11,13 @@
       <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
 
         <!-- Access logs: print to stdout -->
-        <Valve className="org.apache.catalina.valves.AccessLogValve"
+        <Valve className="org.adoxx.ConsoleAccessLogValve"
                directory=""
                prefix="access_log"
                suffix=""
-               pattern="%h %l %u %t &quot;%r&quot; %s %b %D ms" />
+               pattern="%h %l %u %t &quot;%r&quot; %s %b %D ms" 
+               resolveHosts="false"
+               />
 
       </Host>
     </Engine>
