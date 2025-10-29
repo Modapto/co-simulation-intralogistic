@@ -4,10 +4,10 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class RequestLoggingFilter implements Filter {
 
-    private static final int MAX_LOG_SIZE = 4096;
 
     @Override
     public void init(FilterConfig filterConfig) {}
@@ -24,40 +24,41 @@ public class RequestLoggingFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        // Wrap request to allow reading body multiple times
+        // Wrap request and response
         CachedBodyHttpServletRequest cachedRequest = new CachedBodyHttpServletRequest(httpRequest);
-
-        // Wrap response to capture body
         BufferedResponseWrapper responseWrapper = new BufferedResponseWrapper(httpResponse);
 
-        // Read request body
+        // --- REQUEST LOG ---
+        String method = httpRequest.getMethod();
+        String query = httpRequest.getQueryString() != null ? httpRequest.getQueryString() : "";
         String requestBody = cachedRequest.getBody();
-        //if (requestBody.length() > MAX_LOG_SIZE) {
-        //    requestBody = requestBody.substring(0, MAX_LOG_SIZE) + "...[truncated]";
-        //}
 
-        // Log request
-        System.out.println("Request " + httpRequest.getMethod() + " " +
-                httpRequest.getRequestURI() +
-                " query=\"" + (httpRequest.getQueryString() != null ? httpRequest.getQueryString() : "") + "\"" +
-                " body: " + requestBody);
+        StringBuilder requestHeaders = new StringBuilder();
+        Collections.list(httpRequest.getHeaderNames())
+                .forEach(name -> requestHeaders.append(name).append(": ")
+                        .append(httpRequest.getHeader(name)).append("; "));
 
-        // Continue the filter chain with wrapped request and response
+        System.out.println("Request " + method + " " + httpRequest.getRequestURI() +
+                " query=\"" + query + "\" headers=[" + requestHeaders + "] body: " + requestBody);
+
+        // --- CONTINUE CHAIN ---
         chain.doFilter(cachedRequest, responseWrapper);
 
-        // Read response body
-        String responseBody = new String(responseWrapper.getResponseData(), httpResponse.getCharacterEncoding());
-        //if (responseBody.length() > MAX_LOG_SIZE) {
-        //    responseBody = responseBody.substring(0, MAX_LOG_SIZE) + "...[truncated]";
-        //}
+        // --- RESPONSE LOG ---
+        byte[] responseData = responseWrapper.getResponseData();
+        String responseBody = new String(responseData, httpResponse.getCharacterEncoding());
 
-        // Log response
-        System.out.println("Response for " + httpRequest.getMethod() + " " +
-                httpRequest.getRequestURI() + ": " + responseBody);
+        StringBuilder responseHeaders = new StringBuilder();
+        for (String name : responseWrapper.getHeaderNames()) {
+            responseHeaders.append(name).append(": ").append(responseWrapper.getHeader(name)).append("; ");
+        }
 
-        // Copy response back to the client
+        System.out.println("Response for " + method + " " + httpRequest.getRequestURI() +
+                " headers=[" + responseHeaders + "] body: " + responseBody);
+
+        // Copy response to client
         ServletOutputStream out = httpResponse.getOutputStream();
-        out.write(responseWrapper.getResponseData());
+        out.write(responseData);
         out.flush();
     }
 
@@ -65,26 +66,14 @@ public class RequestLoggingFilter implements Filter {
     public void destroy() {}
 
     // -------------------
-    // Helper: Request wrapper
+    // Cached request wrapper
     // -------------------
     private static class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
         private final byte[] cachedBody;
 
         public CachedBodyHttpServletRequest(HttpServletRequest request) throws IOException {
             super(request);
-            InputStream is = request.getInputStream();
-            cachedBody = readInputStream(is);
-        }
-
-        private byte[] readInputStream(InputStream is) throws IOException {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            int nRead;
-            byte[] data = new byte[1024];
-            while ((nRead = is.read(data)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-            buffer.flush();
-            return buffer.toByteArray();
+            cachedBody = request.getInputStream().readAllBytes();
         }
 
         @Override
@@ -92,53 +81,37 @@ public class RequestLoggingFilter implements Filter {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(cachedBody);
             return new ServletInputStream() {
                 @Override
-                public int read() {
-                    return byteArrayInputStream.read();
-                }
-
+                public int read() { return byteArrayInputStream.read(); }
                 @Override
-                public boolean isFinished() {
-                    return byteArrayInputStream.available() == 0;
-                }
-
+                public boolean isFinished() { return byteArrayInputStream.available() == 0; }
                 @Override
                 public boolean isReady() { return true; }
-
                 @Override
-                public void setReadListener(ReadListener readListener) {}
+                public void setReadListener(ReadListener listener) {}
             };
         }
 
-        public String getBody() {
-            return new String(cachedBody, StandardCharsets.UTF_8);
-        }
+        public String getBody() { return new String(cachedBody, StandardCharsets.UTF_8); }
     }
 
     // -------------------
-    // Helper: Response wrapper
+    // Buffered response wrapper
     // -------------------
     private static class BufferedResponseWrapper extends HttpServletResponseWrapper {
         private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         private ServletOutputStream outputStream;
         private PrintWriter writer;
 
-        public BufferedResponseWrapper(HttpServletResponse response) {
-            super(response);
-        }
+        public BufferedResponseWrapper(HttpServletResponse response) { super(response); }
 
         @Override
         public ServletOutputStream getOutputStream() {
             if (outputStream == null) {
                 outputStream = new ServletOutputStream() {
                     @Override
-                    public void write(int b) {
-                        buffer.write(b);
-                        //return b;
-                    }
-
+                    public void write(int b) { buffer.write(b); }
                     @Override
                     public boolean isReady() { return true; }
-
                     @Override
                     public void setWriteListener(WriteListener listener) {}
                 };
@@ -148,9 +121,7 @@ public class RequestLoggingFilter implements Filter {
 
         @Override
         public PrintWriter getWriter() throws IOException {
-            if (writer == null) {
-                writer = new PrintWriter(new OutputStreamWriter(buffer, getCharacterEncoding()));
-            }
+            if (writer == null) writer = new PrintWriter(new OutputStreamWriter(buffer, getCharacterEncoding()));
             return writer;
         }
 
