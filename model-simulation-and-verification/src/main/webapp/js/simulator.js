@@ -634,7 +634,7 @@ function readSingleFile(e) {
 }
 
 function simulate() {
-    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/")) +  '/rest/json';
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf("/")) +  '/rest/json';
 
     var endpoint = new URLSearchParams(window.location.search).get('endpoint');
     if (endpoint != null)
@@ -683,7 +683,7 @@ function simulate() {
 
 
 function simulate_old() {
-    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf("/"));
 
     var jsonFormat = new URLSearchParams(window.location.search).get('format') == 'json';
     serviceEndpoint += jsonFormat ? '/rest/json' : '/rest/simulator/pathanalysis?numExecutions=' + $('#numExecutions').val() + '&fullResults=' + $('#fullResultsChk').is(':checked');
@@ -735,7 +735,7 @@ function simulate_old() {
 
 function generatePNML() {
 
-    var serviceEndpoint = window.location.href.substring(0, window.location.href.lastIndexOf("/"));
+    var serviceEndpoint = window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf("/"));
 
     if (fileContent == null)
         return;
