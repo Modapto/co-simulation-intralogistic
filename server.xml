@@ -10,7 +10,7 @@
 
       <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
 
-        <!-- Access logs: print to stdout -->
+        <!-- Access logs: print to stdout 
         <Valve className="org.adoxx.ConsoleAccessLogValve"
                directory=""
                prefix="access_log"
@@ -18,7 +18,7 @@
                pattern="%h %l %u %t &quot;%r&quot; %s %b %D ms" 
                resolveHosts="false"
                />
-
+        -->
       </Host>
     </Engine>
   </Service>
