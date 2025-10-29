@@ -1,5 +1,11 @@
 FROM tomcat:8.5-jdk11-temurin
 
+# Copy verbose logging config
+COPY logging.properties /usr/local/tomcat/conf/logging.properties
+
+# Optional: Add JVM debug verbosity
+ENV CATALINA_OPTS="-verbose:class -Dorg.apache.catalina.startup.DEBUG=true"
+
 SHELL ["/bin/bash", "-c"]
 
 ENV JAVA_OPTS="-Djdk.xml.xpathExprGrpLimit=0 -Djdk.xml.xpathExprOpLimit=0"
