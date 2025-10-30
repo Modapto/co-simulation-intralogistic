@@ -238,6 +238,10 @@ public class RESTService {
             ex.printStackTrace(); 
             Utils.log(ex);
             return Json.createObjectBuilder().add("error", ex.getMessage()).build().toString();
+        }catch(Error e) {
+            e.printStackTrace(); 
+            Utils.log(e);
+            return Json.createObjectBuilder().add("error", e.getMessage()).build().toString();
         }
     }
 }
