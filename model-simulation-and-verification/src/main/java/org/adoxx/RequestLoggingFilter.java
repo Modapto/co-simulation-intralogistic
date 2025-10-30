@@ -29,6 +29,7 @@ public class RequestLoggingFilter implements Filter {
         BufferedResponseWrapper responseWrapper = new BufferedResponseWrapper(httpResponse);
 
         // --- REQUEST LOG ---
+        
         String method = httpRequest.getMethod();
         String query = httpRequest.getQueryString() != null ? httpRequest.getQueryString() : "";
         String requestBody = cachedRequest.getBody();
@@ -38,8 +39,8 @@ public class RequestLoggingFilter implements Filter {
                 .forEach(name -> requestHeaders.append(name).append(": ")
                         .append(httpRequest.getHeader(name)).append("; "));
 
-        System.out.println("Request " + method + " " + httpRequest.getRequestURI() +
-                " query=\"" + query + "\" headers=[" + requestHeaders + "] body: " + requestBody);
+        System.out.println("Request " + httpRequest.getScheme() + "://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + " " + method + " HTTP/" + httpRequest.getProtocol() + " from " + httpRequest.getRemoteAddr() + ":" + httpRequest.getRemotePort()  + " " + httpRequest.getRequestURI() +
+                " query=\"" + query + "\" headers=[" + requestHeaders + "] body encoding: " + httpRequest.getCharacterEncoding() + " body: " + requestBody);
 
         // --- CONTINUE CHAIN ---
         chain.doFilter(cachedRequest, responseWrapper);
