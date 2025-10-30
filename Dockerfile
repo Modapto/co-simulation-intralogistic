@@ -5,6 +5,7 @@ FROM tomcat:8.5-jdk11-temurin
 
 # Optional: Add JVM debug verbosity
 #ENV CATALINA_OPTS="-verbose:class -Dorg.apache.catalina.startup.DEBUG=true"
+COPY server.xml /usr/local/tomcat/conf/server.xml
 
 SHELL ["/bin/bash", "-c"]
 

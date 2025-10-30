@@ -12,26 +12,6 @@
     <filter-name>RequestLoggingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <filter>
-    <filter-name>compressionFilter</filter-name>
-    <filter-class>org.apache.catalina.filters.CompressionFilter</filter-class>
-    <init-param>
-        <param-name>compressionThreshold</param-name>
-        <param-value>1024</param-value>
-    </init-param>
-    <init-param>
-        <param-name>mimeTypes</param-name>
-        <param-value>text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml</param-value>
-    </init-param>
-    <init-param>
-        <param-name>noCompressionUserAgents</param-name>
-        <param-value>gozilla, traviata</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>compressionFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
   <servlet>
     <servlet-name>Jersey REST Service</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>

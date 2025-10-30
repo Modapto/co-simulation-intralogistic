@@ -13,6 +13,7 @@ public class AddAcceptHeaderFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         // Add Accept if missing
         if (requestContext.getHeaderString("Accept") == null) {
+            System.out.println("Accept header is null");
             requestContext.getHeaders().putSingle("Accept", DEFAULT_ACCEPT);
         }
     }
