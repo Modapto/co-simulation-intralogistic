@@ -187,20 +187,25 @@ public class RESTService {
          *      "modelB64": "..."
          *   }
          */
+        System.out.println("DEBUG 1");
         try{
             JsonObject data = Json.createReader(new StringReader(jsonData)).readObject();
+            System.out.println("DEBUG 2");
             String alg = data.getString("alg");
             String params = data.getString("params");
             String modelB64 = data.getString("modelB64");
+            System.out.println("DEBUG 3");
             String model = new String (Base64.getDecoder().decode(modelB64), "UTF-8");
+            System.out.println("DEBUG 4");
             Map<String,String> paramsMap = Utils.parseQueryString(params);
             
             String results = "";
             if (alg.equals("simulation")) {
                 int numExecutions = Integer.parseInt(Utils.checkDefault(paramsMap.get("numExecutions"), "100"));
                 boolean fullResults = Boolean.parseBoolean(Utils.checkDefault(paramsMap.get("fullResults"), "false"));
-                
+                System.out.println("DEBUG 5");
                 results = startPathAnalysis(model, numExecutions, fullResults);
+                System.out.println("DEBUG 6");
             } else if (alg.equals("deadlock")) {
                 boolean checkAllDeadlock = Boolean.parseBoolean(Utils.checkDefault(paramsMap.get("checkAllDeadlock"), "false"));
 
@@ -232,8 +237,12 @@ public class RESTService {
             } else {
                 throw new Exception("Invalid alg value provided: " + alg + ". Supported are 'simulation', 'deadlock', 'unboundness', 'reachability', 'path', 'getmodellist', 'showpetrinet', 'supportedmodeltypes'.");
             }
+            System.out.println("DEBUG 7");
             String resultsB64 = Base64.getEncoder().encodeToString(results.getBytes("UTF-8"));
-            return Json.createObjectBuilder().add("resultsB64", resultsB64).build().toString();
+            System.out.println("DEBUG 8");
+            String res = Json.createObjectBuilder().add("resultsB64", resultsB64).build().toString();
+            System.out.println("DEBUG 9");
+            return res;
         }catch(Exception ex){
             ex.printStackTrace(); 
             Utils.log(ex);
